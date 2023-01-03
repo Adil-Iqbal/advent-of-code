@@ -1,11 +1,11 @@
 import re
 import argparse
+from pprint import pprint
 
 
 def solve1(content):
     stacks, instructions = content
-    for moves in instructions:
-        qty, src, dest = moves
+    for qty, src, dest in instructions:
         for _ in range(qty):
             stacks[dest].append(stacks[src].pop())
 
@@ -16,12 +16,13 @@ def solve1(content):
 
 
 def solve2(content):
-    print("TODO! Make this work!")
     stacks, instructions = content
-    for moves in instructions:
-        qty, src, dest = moves
-        for _ in range(qty):
-            stacks[dest].append(stacks[src].pop())
+    for qty, src, dest in instructions:
+        src_len = len(stacks[src])
+        slice_obj = slice(src_len - qty, src_len)
+        stack_slice = stacks[src][slice_obj]
+        stacks[dest].extend(stack_slice)
+        del stacks[src][slice_obj]
 
     ans = ""
     for stack in stacks:
@@ -68,7 +69,7 @@ def main():
 
     content = parse_file(args.file)
     args.file.close()
-    print(solve1(content))
+    # print(solve1(content))
     print(solve2(content))
 
 
