@@ -20,9 +20,17 @@ def solve2(pairs):
         first, second = pair
         min_f, max_f = first
         min_s, max_s = second
-        first_overlaps = max_f <= min_s
-        second_overlaps = max_s <= min_f
-        if first_overlaps or second_overlaps:
+        first_min_overlaps = min_f in range(min_s, max_s + 1)
+        first_max_overlaps = max_f in range(min_s, max_s + 1)
+        second_min_overlaps = min_s in range(min_f, max_f + 1)
+        second_max_overlaps = max_s in range(min_f, max_f + 1)
+
+        if (
+            first_min_overlaps
+            or first_max_overlaps
+            or second_min_overlaps
+            or second_max_overlaps
+        ):
             ans += 1
     return ans
 
